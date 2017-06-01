@@ -7,24 +7,21 @@ import peersim.config.Configuration;
 import peersim.core.CommonState;
 import peersim.core.Control;
 import peersim.core.Network;
-
+/**
+ * Clase que se encarga de inicializar los nodos en la red.
+ * @author Natalia
+ *
+ */
 public class Initialization implements Control {
 	String prefix;
-
 	int idLayer;
 	int idTransport;
-
 	//Valores que sacaremos del archivo de configuración	
 	int publishers;
 	int subscribers;
 
 	public Initialization(String prefix) {
 		this.prefix = prefix;
-		/**
-		 * Para obtener valores que deseamos como argumento del archivo de
-		 * configuración, podemos colocar el prefijo de la inicialización en
-		 * este caso "init.1statebuilder" y luego la variable de entrada
-		 */
 		// Configuration.getPid retornar al número de la capa
 		// que corresponden esa parte del protocolo
 		this.idLayer = Configuration.getPid(prefix + ".protocol");
@@ -43,18 +40,12 @@ public class Initialization implements Control {
 	/**
 	 * Ejecución de la inicialización en el momento de crear el overlay en el
 	 * sistema
-	 *
+	 * Aquí la simulación inicializa los nodos como publisher y como subscriber en un comienzo
+	 * e imprime por consola un resumen de los nodos inicializados, con sus vecinos, etc.
 	 */
 	@Override
 	public boolean execute() {
 		System.out.println("EJECUTAMOS EL SIMULADOR");
-		/**
-		 * Para comenzar tomaremos un nodo cualquiera de la red, a través de un random
-		 */
-		//int nodoInicial = CommonState.r.nextInt(Network.size());
-		
-		
-	
 		/**Es conveniente inicializar los nodos, puesto que los nodos 
 		 * son una clase clonable y si asignan valores desde el constructor
 		 *  todas tomaran los mismos valores, puesto que tomaran la misma dirección
@@ -79,7 +70,8 @@ public class Initialization implements Control {
 				while(!((ExampleNode) Network.get(c)).isTopic()){
 					c= random.nextInt(Network.size());
 				}
-				((Subscriber)Network.get(i)).register_subscriber((ExampleNode)Network.get(c));
+				
+				((Topic)Network.get(c)).add_subscriber(i);
 			}
 			
 		}

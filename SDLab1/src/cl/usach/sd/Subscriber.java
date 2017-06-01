@@ -1,8 +1,14 @@
 package cl.usach.sd;
 
+/**
+ * Interface que asegura que el nodo puede tener el comportamiento de un subscriber.
+ * En el patrón de diseño Publisher-Subscriber.
+ * @author Natalia
+ *
+ */
 public interface Subscriber {
 
-	void register_subscriber(Topic sub);
+	Message register_subscriber(int topic);
 	void request_update(int message);
-	void deregister_subscriber(Topic topic);
+	Message deregister_subscriber(int topic);
 }
